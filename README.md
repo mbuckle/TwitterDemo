@@ -12,15 +12,15 @@ The following **required** functionality is completed:
 - [x] User can view last 20 tweets from their home timeline.
 - [x] In the home timeline, user can view tweet with the user profile picture, username, tweet text, and timestamp.  In other words, design the custom cell with the proper Auto Layout settings.  You will also need to augment the model classes.
 - [x] User can pull to refresh.
-- [ ] User can compose a new tweet by tapping on a compose button.
+- [X] User can compose a new tweet by tapping on a compose button.
 - [x] User can tap on a tweet to view it, with controls to retweet, favorite, and reply.
 - [x] Tab Bar
    - [x] Use a `UITabBarController`
-   - [ ] The tab bar should include links to your profile, the home timeline, and the mentions view.
-- [ ] Profile page
-   - [ ] Contains the user header view (implemented as a custom view)
-   - [ ] Contains a section with the users basic stats: # tweets, # following, # followers
-- [ ] Home Timeline
+   - [X] The tab bar should include links to your profile, the home timeline, and the mentions view.
+- [X] Profile page
+   - [X] Contains the user header view (implemented as a custom view)
+   - [X] Contains a section with the users basic stats: # tweets, # following, # followers
+- [X] Home Timeline
    - [ ] Tapping on a user image should bring up that user's profile page
 
 The following **optional** features are implemented:
@@ -52,7 +52,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-In the beginning I was having trouble figuring out the navigation stack, but it got easier once I got the hang of it.
+Had trouble figuring out the delegate for the table view cell profile image which would take you to the tweet user's profile page.
 
 ## License
 
