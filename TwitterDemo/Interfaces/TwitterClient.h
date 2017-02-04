@@ -16,6 +16,7 @@
 
 - (void)loginWithCompletion:(void (^)(User *user, NSError *error))completion;
 - (void)openURL:(NSURL *)url;
+- (void)getNewUser;
 - (void)getTweetsWithCompletion:(void (^)(NSArray<Tweet *> *tweets, NSError *error))completion;
 - (void)getMentionsWithCompletion:(void (^)(NSArray<Tweet *> *tweets, NSError *error))completion;
 - (User *)getLoggedInUser;

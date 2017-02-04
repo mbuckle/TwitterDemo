@@ -71,21 +71,26 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         // Save the access token for all future requests
         [self.requestSerializer saveAccessToken:accessToken];
         
-        // Get current user info
-        [self GET:@"1.1/account/verify_credentials.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            // Create new user object
-            User *user = [[User alloc] initWithDictionary:responseObject];
-            self.loggedInUser = user;
-            
-            // Set the login completion property with the user if there are no errors
-            self.loginCompletion(user, nil);
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"Failed to get the current user info!");
-            // Set the login completion property with an error if there is a failure
-            self.loginCompletion(nil, error);
-        }];
+        // Get new user info
+        [self getNewUser];
     } failure:^(NSError *error) {
         NSLog(@"Failed to get the access token!");
+    }];
+}
+
+- (void)getNewUser {
+    // Get current user info
+    [self GET:@"1.1/account/verify_credentials.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        // Create new user object
+        User *user = [[User alloc] initWithDictionary:responseObject];
+        self.loggedInUser = user;
+        
+        // Set the login completion property with the user if there are no errors
+        self.loginCompletion(user, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Failed to get the current user info!");
+        // Set the login completion property with an error if there is a failure
+        self.loginCompletion(nil, error);
     }];
 }
 
