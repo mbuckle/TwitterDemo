@@ -9,8 +9,9 @@
 #import "DetailedTweetViewController.h"
 #import "DetailedTweetTableViewCell.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import "ProfileViewController.h"
 
-@interface DetailedTweetViewController () <UITableViewDataSource>
+@interface DetailedTweetViewController () <UITableViewDataSource, DetailedTweetTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *detailedTableView;
 
@@ -39,12 +40,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailedTweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DetailedTweetTableViewCell" forIndexPath:indexPath];
+    cell.delegate = self;
     
     // Set detailed tweet info
     cell.retweetedByLabel.text = self.tweet.retweetedBy;
     cell.nameLabel.text = self.tweet.user.name;
     cell.handleLabel.text = self.tweet.user.screenname;
     cell.tweetLabel.text = self.tweet.text;
+    cell.user = self.tweet.user;
     
     // Set profile image async
     cell.profileImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -60,6 +63,12 @@
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%@", self.tweet.favoriteCount];
     
     return cell;
+}
+
+- (void)detailedTweetCellDidSelectImage:(DetailedTweetTableViewCell *)detailedTweetTableViewCell {
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:detailedTweetTableViewCell.user];
+    
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 @end

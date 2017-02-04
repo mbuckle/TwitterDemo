@@ -39,14 +39,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Set up nav bar items
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCompose:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOut:)];
     self.navigationController.navigationBar.translucent = NO;
     
-    // Set up user info
+    // Set up user info and nav bar buttons if not initialized with a user
     if (!self.user) {
         self.user = [[TwitterClient sharedInstance] getLoggedInUser];
+        // Set up nav bar items
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCompose:)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOut:)];
     }
     
     self.nameLabel.text = self.user.name;

@@ -13,8 +13,9 @@
 #import "DetailedTweetViewController.h"
 #import "ComposeTweetViewController.h"
 #import "NavigationController.h"
+#import "ProfileViewController.h"
 
-@interface TweetListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TweetListViewController () <UITableViewDataSource, UITableViewDelegate, TweetTableViewCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray<Tweet *> *tweets;
@@ -94,6 +95,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetTableViewCell" forIndexPath:indexPath];
+    cell.delegate = self;
     
     // Set tweet text data
     Tweet *tweet = [self.tweets objectAtIndex:indexPath.row];
@@ -101,6 +103,7 @@
     cell.handleLabel.text = tweet.user.screenname;
     cell.contentLabel.text = tweet.text;
     cell.retweetLabel.text = tweet.retweetedBy;
+    cell.user = tweet.user;
     
     // Set profile image async
     cell.profileImageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -122,6 +125,12 @@
     dtvc.tweet = [self.tweets objectAtIndex:indexPath.row];
     
     [self.navigationController pushViewController:dtvc animated:YES];
+}
+
+- (void)tweetCellDidSelectImage:(TweetTableViewCell *)tweetTableViewCell {
+    ProfileViewController *pvc = [[ProfileViewController alloc] initWithUser:tweetTableViewCell.user];
+    
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 - (IBAction)onLogOut:(id)sender {

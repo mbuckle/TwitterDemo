@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
+
+@protocol TweetTableViewCellDelegate;
 
 @interface TweetTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) id<TweetTableViewCellDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -19,5 +24,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UILabel *retweetLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) User *user;
 
+@end
+
+@protocol TweetTableViewCellDelegate <NSObject>
+- (void)tweetCellDidSelectImage:(TweetTableViewCell *)tweetTableViewCell;
 @end
