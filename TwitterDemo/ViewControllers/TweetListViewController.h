@@ -10,4 +10,6 @@
 
 @interface TweetListViewController : UIViewController
 
+@property (nonatomic, strong) NSString *feedType;
+
 @end

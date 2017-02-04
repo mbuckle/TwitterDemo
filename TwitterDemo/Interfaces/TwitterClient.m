@@ -17,6 +17,8 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 
 @property (nonatomic, strong) void (^loginCompletion)(User *user, NSError *error);
 @property (nonatomic, strong) void (^getTweetsCompletion)(NSArray<Tweet *> *tweets, NSError *error);
+@property (nonatomic, strong) void (^getMentionsCompletion)(NSArray<Tweet *> *tweets, NSError *error);
+@property (nonatomic, strong) User *loggedInUser;
 
 @end
 
@@ -70,9 +72,10 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         [self.requestSerializer saveAccessToken:accessToken];
         
         // Get current user info
-        [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self GET:@"1.1/account/verify_credentials.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             // Create new user object
             User *user = [[User alloc] initWithDictionary:responseObject];
+            self.loggedInUser = user;
             
             // Set the login completion property with the user if there are no errors
             self.loginCompletion(user, nil);
@@ -89,7 +92,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
 - (void)getTweetsWithCompletion:(void (^)(NSArray<Tweet *> *tweets, NSError *error))completion {
     self.getTweetsCompletion = completion;
     // Get current user tweets
-    [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    [self GET:@"1.1/statuses/home_timeline.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         // Create new tweet object
         NSArray *tweets = [Tweet tweetsWithArray:responseObject];
         self.getTweetsCompletion(tweets, nil);
@@ -97,6 +100,23 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
         NSLog(@"Failed to get the current user tweets!");
         self.getTweetsCompletion(nil, error);
     }];
+}
+
+- (void)getMentionsWithCompletion:(void (^)(NSArray<Tweet *> *tweets, NSError *error))completion {
+    self.getMentionsCompletion = completion;
+    // Get current user tweets
+    [self GET:@"1.1/statuses/mentions_timeline.json" parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        // Create new tweet object
+        NSArray *tweets = [Tweet tweetsWithArray:responseObject];
+        self.getMentionsCompletion(tweets, nil);
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"Failed to get the current user mentions!");
+        self.getMentionsCompletion(nil, error);
+    }];
+}
+
+- (User *)getLoggedInUser {
+    return self.loggedInUser;
 }
 
 @end
