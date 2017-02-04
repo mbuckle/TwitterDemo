@@ -11,6 +11,8 @@
 #import "TwitterClient.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import "DetailedTweetViewController.h"
+#import "ComposeTweetViewController.h"
+#import "NavigationController.h"
 
 @interface TweetListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -25,6 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // Add logout and compose button to nav bar
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCompose:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOut:)];
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
@@ -35,7 +41,8 @@
     UINib *nib = [UINib nibWithNibName:@"TweetTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"TweetTableViewCell"];
     
-    [self fetchTweets];
+    // Load tweets
+    [self refreshTable];
     
     // Implement UI Refresh Control
     self.refreshControl = [[UIRefreshControl alloc]init];
@@ -44,7 +51,11 @@
 }
 
 - (void)refreshTable {
-    [self fetchTweets];
+    if ([self.feedType isEqualToString:@"Home"]) {
+        [self fetchTweets];
+    } else if ([self.feedType isEqualToString:@"Mentions"]) {
+        [self fetchMentions];
+    }
 }
 
 - (void)fetchTweets {
@@ -60,6 +71,21 @@
             
             [self.refreshControl endRefreshing];
         }];
+}
+
+- (void)fetchMentions {
+    // Get the user's mentions
+    [[TwitterClient sharedInstance] getMentionsWithCompletion:^(NSArray<Tweet *> *tweets, NSError *error) {
+        if (tweets != nil) {
+            self.tweets = tweets;
+            [self.tableView reloadData];
+        } else {
+            // Present error view
+            NSLog(@"Getting user mentions failed with error: %@", error);
+        }
+        
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -96,6 +122,16 @@
     dtvc.tweet = [self.tweets objectAtIndex:indexPath.row];
     
     [self.navigationController pushViewController:dtvc animated:YES];
+}
+
+- (IBAction)onLogOut:(id)sender {
+    [[NavigationManager shared] logOut];
+}
+
+- (IBAction)showCompose:(id)sender {
+    ComposeTweetViewController *ctvc = [[ComposeTweetViewController alloc] initWithNibName:@"ComposeTweetViewController" bundle:nil];
+    
+    [self.navigationController pushViewController:ctvc animated:YES];
 }
 
 @end

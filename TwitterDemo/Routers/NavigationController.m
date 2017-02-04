@@ -9,6 +9,7 @@
 #import "NavigationController.h"
 #import "LoginViewController.h"
 #import "TweetListViewController.h"
+#import "ProfileViewController.h"
 
 @interface NavigationManager ()
 
@@ -47,27 +48,35 @@
 }
 
 - (UIViewController *)loggedInVC {
-    // Create root VC for the tab's navigation controller
-    TweetListViewController *vc = [[TweetListViewController alloc] initWithNibName:@"TweetListViewController" bundle:nil];
-    vc.title = @"Twitter";
+    // Create root nav controller for the home tab bar item
+    TweetListViewController *homeVC = [[TweetListViewController alloc] initWithNibName:@"TweetListViewController" bundle:nil];
+    homeVC.feedType = @"Home";
+    homeVC.title = @"Home";
+    UINavigationController *homeNavController = [[UINavigationController alloc] initWithRootViewController:homeVC];
     
-    // Create navigation controller
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    // Create root nav controller for the mentions tab bar item
+    TweetListViewController *mentionsVC = [[TweetListViewController alloc] initWithNibName:@"TweetListViewController" bundle:nil];
+    mentionsVC.feedType = @"Mentions";
+    mentionsVC.title = @"Mentions";
+    UINavigationController *mentionsNavController = [[UINavigationController alloc] initWithRootViewController:mentionsVC];
     
-    // Add compose button to nav bar
-    vc.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(showCompose:)];
-    vc.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogOut:)];
+    // Create root nav controller for the profile tab bar item
+    ProfileViewController *profileVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:nil];
+    profileVC.title = @"Profile";
+    UINavigationController *profileNavController = [[UINavigationController alloc] initWithRootViewController:profileVC];
     
     // Create tab bar view controller
     UITabBarController *tabController = [[UITabBarController alloc] init];
     
-    // Add navigation controller to tab bar controller
-    tabController.viewControllers = @[navController];
+    // Add navigation controllers to tab bar controller
+    tabController.viewControllers = @[homeNavController, mentionsNavController, profileNavController];
     
     [[tabController.tabBar.items objectAtIndex:0] setTitle:@"Home"];
     [[tabController.tabBar.items objectAtIndex:0] setImage:[UIImage imageNamed:@"home-icon.png"]];
-//    [[tabController.tabBar.items objectAtIndex:1] setTitle:@"Mentions"];
-//    [[tabController.tabBar.items objectAtIndex:2] setTitle:@"Profile"];
+    [[tabController.tabBar.items objectAtIndex:1] setTitle:@"Mentions"];
+    [[tabController.tabBar.items objectAtIndex:1] setImage:[UIImage imageNamed:@"moment-icon.png"]];
+    [[tabController.tabBar.items objectAtIndex:2] setTitle:@"Profile"];
+    [[tabController.tabBar.items objectAtIndex:2] setImage:[UIImage imageNamed:@"profile-icon.png"]];
     
     return tabController;
 }
@@ -88,15 +97,6 @@
 - (void)logOut {
     self.isLoggedIn = NO;
     self.navigationController.viewControllers = @[[self loggedOutVC]];
-}
-
-- (IBAction)onLogOut:(id)sender {
-    [self logOut];
-}
-
-// TODO: implement this
-- (IBAction)showCompose:(id)sender {
-    NSLog(@"Open tweet composition view");
 }
 
 @end
