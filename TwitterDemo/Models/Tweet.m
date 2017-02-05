@@ -8,6 +8,7 @@
 
 #import "Tweet.h"
 #import "MWFeedParser/NSString+HTML.h"
+#import "Utils.h"
 
 @implementation Tweet
 
@@ -54,10 +55,14 @@
         self.text = [self.text stringByDecodingHTMLEntities];
         
         // Format tweet created at date
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";
-        [formatter dateFromString:createdAtString];
-        self.createdAt = [formatter dateFromString:createdAtString];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"EEE MMM d HH:mm:ss Z y";
+        [dateFormatter dateFromString:createdAtString];
+        self.createdAt = [dateFormatter dateFromString:createdAtString];
+        
+        // Set tweet stats
+        self.retweetCount = [Utils formattedStringFromNumber:dictionary[@"retweet_count"]];
+        self.favoriteCount = [Utils formattedStringFromNumber:dictionary[@"favorite_count"]];
     }
     
     return self;

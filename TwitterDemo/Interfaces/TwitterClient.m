@@ -47,12 +47,12 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     
     // Request new token
     [self fetchRequestTokenWithPath:@"oauth/request_token" method:@"GET" callbackURL:[NSURL URLWithString:@"cptwitterdemo://oauth"] scope:nil success:^(BDBOAuth1Credential *requestToken) {
-        NSLog(@"Successfully got the request token!");
+        //NSLog(@"Successfully got the request token!");
         
         // Create authentication Url
         NSURL *authURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.twitter.com/oauth/authorize?oauth_token=%@", requestToken.token]];
         [[UIApplication sharedApplication] openURL:authURL options:@{} completionHandler:^(BOOL success) {
-            NSLog(@"Successfully opened the URL!");
+            //NSLog(@"Successfully opened the URL!");
         }];
         
     } failure:^(NSError *error) {
@@ -66,7 +66,7 @@ NSString * const kTwitterBaseUrl = @"https://api.twitter.com";
     // Request access token after returning from twitter auth url
     BDBOAuth1Credential *requestToken = [BDBOAuth1Credential credentialWithQueryString:url.query];
     [self fetchAccessTokenWithPath:@"oauth/access_token" method:@"POST" requestToken:requestToken success:^(BDBOAuth1Credential *accessToken) {
-        NSLog(@"Successfully got the access token!");
+        //NSLog(@"Successfully got the access token!");
         
         // Save the access token for all future requests
         [self.requestSerializer saveAccessToken:accessToken];

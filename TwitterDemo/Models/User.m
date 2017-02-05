@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "Utils.h"
 
 @implementation User
 
@@ -18,10 +19,16 @@
         self.screenname = [NSString stringWithFormat:@"@%@", dictionary[@"screen_name"]];
         self.profileImageUrl = [NSURL URLWithString:dictionary[@"profile_image_url_https"]];
         self.tagline = dictionary[@"description"];
+        self.backgroundImageUrl = [NSURL URLWithString:dictionary[@"profile_background_image_url_https"]];
         self.bannerImageUrl = [NSURL URLWithString:dictionary[@"profile_banner_url"]];
-        self.friendsCount = [NSString stringWithFormat:@"%@", dictionary[@"friends_count"]];
-        self.followersCount = [NSString stringWithFormat:@"%@", dictionary[@"followers_count"]];
-        self.statusCount = [NSString stringWithFormat:@"%@", dictionary[@"statuses_count"]];
+        if (!self.bannerImageUrl) {
+            self.bannerImageUrl = self.backgroundImageUrl;
+        }
+        
+        // Set user stats
+        self.friendsCount = [Utils formattedStringFromNumber:dictionary[@"friends_count"]];
+        self.followersCount = [Utils formattedStringFromNumber:dictionary[@"followers_count"]];
+        self.statusCount = [Utils formattedStringFromNumber:dictionary[@"statuses_count"]];
     }
     
     return self;

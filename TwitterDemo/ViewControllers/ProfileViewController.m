@@ -58,8 +58,9 @@
     // Load banner and profile image async
     self.profileImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.profileImageView setImageWithURL:self.user.profileImageUrl];
-    self.bannerImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.bannerImageView setImageWithURL:self.user.bannerImageUrl];
+    // If the banner image url is invalid then use the background image as a backup
+    [self.bannerImageView setImageWithURL:self.user.backgroundImageUrl];
+    [self.bannerImageView setImageWithURL:self.user.bannerImageUrl placeholderImage:self.bannerImageView.image];
 }
 
 - (IBAction)onLogOut:(id)sender {

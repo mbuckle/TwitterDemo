@@ -54,13 +54,13 @@
     [cell.profileImageView setImageWithURL:self.tweet.user.profileImageUrl];
     
     // Set date for the tweet
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"d/M/yy, h:mm a"];
-    cell.dateLabel.text = [formatter stringFromDate:self.tweet.createdAt];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"d/M/yy, h:mm a"];
+    cell.dateLabel.text = [dateFormatter stringFromDate:self.tweet.createdAt];
     
     // Set tweet stats
-    cell.retweetCountLabel.text = [NSString stringWithFormat:@"%@", self.tweet.retweetCount];
-    cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%@", self.tweet.favoriteCount];
+    cell.retweetCountLabel.text = self.tweet.retweetCount;
+    cell.favoriteCountLabel.text = self.tweet.favoriteCount;
     
     return cell;
 }

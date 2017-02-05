@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSURL *profileImageUrl;
 @property (nonatomic, strong) NSString *tagline;
 @property (nonatomic, strong) NSURL *bannerImageUrl;
+@property (nonatomic, strong) NSURL *backgroundImageUrl;
 @property (nonatomic, strong) NSString *friendsCount;
 @property (nonatomic, strong) NSString *followersCount;
 @property (nonatomic, strong) NSString *statusCount;
