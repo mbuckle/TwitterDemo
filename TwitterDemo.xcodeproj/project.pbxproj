@@ -30,6 +30,7 @@
 		CA3A13401E44FB8000F738A9 /* ComposeTweetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA3A133E1E44FB8000F738A9 /* ComposeTweetViewController.xib */; };
 		CA3A13441E45186400F738A9 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA3A13421E45186400F738A9 /* ProfileViewController.m */; };
 		CA3A13451E45186400F738A9 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA3A13431E45186400F738A9 /* ProfileViewController.xib */; };
+		CA8F38D11E46D2000063297B /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8F38D01E46D2000063297B /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,8 @@
 		CA3A13411E45186400F738A9 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		CA3A13421E45186400F738A9 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		CA3A13431E45186400F738A9 /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		CA8F38CF1E46D2000063297B /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		CA8F38D01E46D2000063297B /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +157,8 @@
 				CA3A13031E414BEB00F738A9 /* Tweet.m */,
 				CA3A13051E414BF700F738A9 /* User.h */,
 				CA3A13061E414BF700F738A9 /* User.m */,
+				CA8F38CF1E46D2000063297B /* Utils.h */,
+				CA8F38D01E46D2000063297B /* Utils.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 				CA3A13331E43B6E600F738A9 /* DetailedTweetViewController.m in Sources */,
 				CA00536E1E3FB918001DCC1A /* AppDelegate.m in Sources */,
 				CA3A132E1E42A85300F738A9 /* NavigationController.m in Sources */,
+				CA8F38D11E46D2000063297B /* Utils.m in Sources */,
 				CA00536B1E3FB918001DCC1A /* main.m in Sources */,
 				CA3A13041E414BEB00F738A9 /* Tweet.m in Sources */,
 				CA0053881E3FC831001DCC1A /* TweetTableViewCell.m in Sources */,
