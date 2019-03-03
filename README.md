@@ -50,10 +50,6 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-## Notes
-
-Had trouble figuring out the delegate for the table view cell profile image which would take you to the tweet user's profile page.
-
 ## License
 
     Copyright [2017] [Matthew Buckle]
